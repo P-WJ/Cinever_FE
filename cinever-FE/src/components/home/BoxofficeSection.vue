@@ -169,7 +169,7 @@ const handleMovieClick = (movie) => {
       <div class="w-full max-w-6xl">
         <Swiper
           :centered-slides="true"
-          :loop="true"
+          :loop="(boxOfficeMovieList?.length || 0) > 5"
           :space-between="6"
           :grab-cursor="true"
           :slide-to-clicked-slide="true"

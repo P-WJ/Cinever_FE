@@ -12,6 +12,7 @@ import WordCloud from "vue3-word-cloud";
 const keyword = ref("");
 const rating = ref(0);
 const userStore = useUserStore();
+const currentMemberId = computed(() => userStore.user?.memberId ?? null);
 const isLoading = ref(false);
 
 const props = defineProps({
@@ -44,6 +45,11 @@ const startEdit = () => {
 };
 
 const handleUpdate = async () => {
+  if (!currentMemberId.value) {
+    alert("로그인이 필요합니다.");
+    return;
+  }
+
   if (!keyword.value.trim()) {
     alert("리뷰를 입력해주세요.");
     return;
@@ -56,7 +62,7 @@ const handleUpdate = async () => {
 
   try {
     await updateReview(props.movieId, {
-      memberId: userStore.user.memberId,
+      memberId: currentMemberId.value,
       context: keyword.value,
       rating: rating.value,
       movieId: props.movieId,
@@ -71,6 +77,11 @@ const handleUpdate = async () => {
 };
 
 const handleSubmit = async () => {
+  if (!currentMemberId.value) {
+    alert("로그인이 필요합니다.");
+    return;
+  }
+
   if (!keyword.value.trim()) {
     alert("리뷰를 입력해주세요.");
     return;
@@ -85,7 +96,7 @@ const handleSubmit = async () => {
     isLoading.value = true; // 로딩 시작
 
     await createReview(props.movieId, {
-      memberId: userStore.user.memberId,
+      memberId: currentMemberId.value,
       context: keyword.value,
       rating: rating.value,
       movieId: props.movieId,
@@ -110,7 +121,7 @@ const handleDelete = async () => {
 
   if (confirm("정말 삭제하시겠습니까?")) {
     try {
-      await deleteReview(myReviews.id);
+      await deleteReview(myReview.id);
       alert("리뷰가 삭제되었습니다!");
       window.location.reload();
     } catch (error) {
@@ -276,7 +287,7 @@ const getColorByWeight = ([, weight]) => {
       :content="review.context"
       :nickname="review.nickname"
       starColor="text-amber-500"
-      :userId="userStore.user.memberId"
+      :userId="currentMemberId"
       :keywords="review.keywords"
     />
 

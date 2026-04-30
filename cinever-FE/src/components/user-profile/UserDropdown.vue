@@ -15,9 +15,14 @@ const userStore = useUserStore();
 
 const { user } = storeToRefs(userStore);
 
-const isAdmin = user.value.roleName === "ADMIN";
+const isAdmin = computed(() => user.value?.roleName === "ADMIN");
 
 const goToProfile = () => {
+  if (!user.value?.memberId) {
+    router.push("/login");
+    return;
+  }
+
   router.push(`/user/${user.value.memberId}`);
 };
 

@@ -12,6 +12,7 @@ import { updateUser } from "../../api/user";
 const userStore = useUserStore();
 const user = userStore.user;
 const isSaving = ref(false); // ✅ 로딩 상태
+const useMockApi = import.meta.env.VITE_USE_MOCK_API !== "false";
 
 // 부모로부터 모달 열림 상태를 받음
 const props = defineProps({
@@ -86,17 +87,21 @@ const onProfileImageChange = (e) => {
 const saveProfile = async () => {
   isSaving.value = true; // 로딩 시작
   try {
-    const url = ref();
+    let profilePath;
     if (file.value) {
-      const storageRef = storage.ref();
-      const fileRef = storageRef.child(`profile/${user.memberId}`);
-      await fileRef.put(file.value);
-      url.value = await fileRef.getDownloadURL();
+      if (useMockApi) {
+        profilePath = imgSrc.value;
+      } else {
+        const storageRef = storage.ref();
+        const fileRef = storageRef.child(`profile/${user.memberId}`);
+        await fileRef.put(file.value);
+        profilePath = await fileRef.getDownloadURL();
+      }
     }
 
     await updateUser(user.memberId, {
       nickname: form.value.nickname,
-      profilePath: url.value,
+      profilePath,
     });
 
     window.location.reload();

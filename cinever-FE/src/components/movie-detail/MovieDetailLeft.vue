@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import RatingInput from "../common/BaseStarRating.vue";
 import BaseCard from "../common/BaseCard.vue";
 import { createReview } from "../../api/reviewApi";
@@ -12,6 +12,7 @@ const props = defineProps({
 });
 
 const userStore = useUserStore();
+const currentMemberId = computed(() => userStore.user?.memberId ?? null);
 const showRatingInput = ref(false);
 const tempRating = ref(0);
 const isWishlisted = ref(props.dataList.isWishlisted);
@@ -34,9 +35,16 @@ const handelReviewed = () => {
 };
 
 const submitReview = async () => {
+  if (!currentMemberId.value) {
+    alert("로그인이 필요합니다.");
+    showRatingInput.value = false;
+    tempRating.value = 0;
+    return;
+  }
+
   try {
     const payload = {
-      memberId: userStore.user.memberId,
+      memberId: currentMemberId.value,
       movieId: props.dataList.movieId,
       context: "",
       rating: tempRating.value,

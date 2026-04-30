@@ -1,8 +1,12 @@
 import axios from "axios";
 import { useUserStore } from "../stores/userStore";
+import { mockAdapter } from "./mockAdapter";
+
+const useMockApi = import.meta.env.VITE_USE_MOCK_API !== "false";
 
 const api = axios.create({
   baseURL: "http://localhost:8080",
+  adapter: useMockApi ? mockAdapter : undefined,
   headers: {
     "Content-Type": "application/json",
   },

@@ -17,7 +17,7 @@ const emit = defineEmits(["toggle-follow"]);
 
 const userStore = useUserStore();
 const isOwnProfile = computed(() => {
-  return props.userInfo?.memberId === userStore.user.memberId;
+  return props.userInfo?.memberId === userStore.user?.memberId;
 });
 
 watch(

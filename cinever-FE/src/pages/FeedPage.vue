@@ -214,7 +214,7 @@ const getReviewList = async () => {
                   />
 
                   <div>
-                    <p
+                    <div
                       class="flex items-center gap-2 text-sm font-semibold text-white sm:text-base"
                     >
                       {{ review.followingNickname }}
@@ -223,13 +223,13 @@ const getReviewList = async () => {
                       >
                         {{ review.followingRole }}
                       </span>
-                                        <div
-                    class="w-fit px-2 py-0.5 text-xs font-semibold rounded-full border backdrop-blur-md backdrop-saturate-150"
-                    :class="getReviewerRoleMeta(review.roleName).badgeClass"
-                  >
-                    {{ getReviewerRoleMeta(review.roleName).roleName }}
-                  </div>
-                    </p>
+                      <div
+                        class="w-fit px-2 py-0.5 text-xs font-semibold rounded-full border backdrop-blur-md backdrop-saturate-150"
+                        :class="getReviewerRoleMeta(review.roleName).badgeClass"
+                      >
+                        {{ getReviewerRoleMeta(review.roleName).roleName }}
+                      </div>
+                    </div>
                     <p class="text-[10px] text-white/60 sm:text-xs">
                       <!-- {{ review.user.preference }} -->
                     </p>
