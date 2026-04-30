@@ -3,7 +3,7 @@ import BaseReview from "../common/BaseReview.vue";
 import BaseInput from "../common/BaseInput.vue";
 import BaseButton from "../common/BaseButton.vue";
 import BaseStarRating from "../common/BaseStarRating.vue";
-import BaseTextArea from "../common/BaseTextArea.vue";
+import BaseTextArea from "../common/BaseTextarea.vue";
 import { ref, computed } from "vue";
 import { createReview, updateReview, deleteReview } from "../../api/reviewApi";
 import { useUserStore } from "../../stores/userStore";
