@@ -1,0 +1,11 @@
+{
+  "installCommand": "npm install --prefix cinever-FE",
+  "buildCommand": "npm run build --prefix cinever-FE",
+  "outputDirectory": "cinever-FE/dist",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
